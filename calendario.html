@@ -6,15 +6,23 @@
     <title>Calendario con Eventos Persistentes</title>
  <style>
     body {
-        background-color: #fff; /* Cambiar fondo gris a blanco */
-        margin: 0; /* Eliminar márgenes predeterminados */
-        min-height: 750px; /* Altura mínima igual a la del iframe */
+        background-color: #fff;
+        margin: 0;
+        padding: 20px 0; /* Añadir padding vertical */
+        min-height: 750px;
     }
+    
     .calendar-container {
-        width: 100%; /* Ocupar todo el ancho disponible */
-        margin-bottom: 0; /* Eliminar espacio inferior */
+        width: 100%;
+        margin: 0 auto; /* Centrar el calendario */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Restaurar sombra */
     }
 
+    /* Asegurar que los elementos internos sean visibles */
+    .calendar-header, .day-name, .day {
+        background-color: transparent !important;
+    }
+ </style>
         .calendar-header {
             background-color: #3498db;
             color: #fff;
