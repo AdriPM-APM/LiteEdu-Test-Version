@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Plataforma Personal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css">
+    <style>
+        body { font-family: 'Rubik', Arial, sans-serif; background-color: #f8f9fa; }
+        .navbar { background-color: #333; }
+        .navbar-brand, .nav-link { color: #fff !important; }
+        .sidebar { background-color: #fff; border-right: 1px solid #dee2e6; padding-top: 20px; }
+        .sidebar .nav-link { color: #333; }
+        .sidebar .nav-link.active { background-color: #007bff; color: #fff; }
+        .block-home { margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background-color: #fff; }
+        .titol { padding: 15px; color: #fff; font-size: 1.2rem; border-radius: 8px 8px 0 0; }
+        .links { padding: 15px; }
+        .links a { display: block; padding: 10px 0; text-decoration: none; }
+        .links a:hover { background-color: #f1f1f1; }
+        .footer { background-color: #333; color: #fff; padding: 20px; text-align: center; }
+        #calendario { padding: 15px; }
+        .form-control { border-radius: 5px; }
+        .btn-primary { background-color: #007bff; border: none; }
+        .btn-primary:hover { background-color: #0056b3; }
+        .tab-pane { padding: 20px; }
+        
+        /* Estilos para el área de dibujo */
+        .canvas-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: auto;
+            min-height: 70vh;
+        }
+        #dibujoCanvas {
+            background-color: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin: auto;
+        }
+        @media (max-width: 992px) {
+            #dibujoCanvas {
+                max-width: 95%;
+                height: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Mi Plataforma Personal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link active" href="#inicio" data-bs-toggle="tab">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#calendario" data-bs-toggle="tab">Calendario</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#notas" data-bs-toggle="tab">Notas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#mensajes" data-bs-toggle="tab">Mensajes</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#dibujo" data-bs-toggle="tab">Dibujo</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-sm-4 col-lg-2 d-none d-sm-block sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#inicio" data-bs-toggle="tab">
+                                <i class="fas fa-home"></i> Inicio
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#calendario" data-bs-toggle="tab">
+                                <i class="fas fa-calendar-alt"></i> Calendario
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#notas" data-bs-toggle="tab">
+                                <i class="fas fa-sticky-note"></i> Notas
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#mensajes" data-bs-toggle="tab">
+                                <i class="fas fa-comment"></i> Mensajes
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#dibujo" data-bs-toggle="tab">
+                                <i class="fas fa-paint-brush"></i> Dibujo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="col-12 col-sm-8 col-lg-10 pt-4">
+                <div class="tab-content">
+                    <!-- Pestaña Inicio -->
+                    <div class="tab-pane fade show active" id="inicio">
+                        <h1 class="titol-home"><i class="fas fa-home"></i> Inicio</h1>
+                        <h2 class="subtitol-home">Bienvenidos a tu plataforma personal</h2>
+                        <div class="row">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="block-home">
+                                    <div class="titol" style="background-color: #007bff;">
+                                        <i class="fas fa-calendar-alt fa-lg"></i> Calendario
+                                    </div>
+                                    <div class="links">
+                                        <div id="calendario"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="block-home">
+                                    <div class="titol" style="background-color: #28a745;">
+                                        <i class="fas fa-sticky-note fa-lg"></i> Notas
+                                    </div>
+                                    <div class="links">
+                                        <textarea id="notas" class="form-control" rows="5" placeholder="Escribe tus notas aquí..."></textarea>
+                                        <button class="btn btn-primary mt-2" onclick="guardarNotas()">Guardar Notas</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="block-home">
+                                    <div class="titol" style="background-color: #dc3545;">
+                                        <i class="fas fa-comment fa-lg"></i> Mensajes
+                                    </div>
+                                    <div class="links">
+                                        <textarea id="mensajes" class="form-control" rows="5" placeholder="Escribe tus mensajes aquí..."></textarea>
+                                        <button class="btn btn-primary mt-2" onclick="guardarMensajes()">Guardar Mensajes</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pestaña Dibujo -->
+                    <div class="tab-pane fade" id="dibujo">
+                        <div class="block-home">
+                            <div class="titol" style="background-color: #ffc107;">
+                                <i class="fas fa-paint-brush fa-lg"></i> Zona de Dibujo
+                            </div>
+                            <div class="canvas-container">
+                                <canvas id="dibujoCanvas" width="800" height="500"></canvas>
+                            </div>
+                            <div class="text-center mb-3">
+                                <button class="btn btn-primary mt-2" onclick="limpiarDibujo()">Limpiar Dibujo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer mt-4">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <a href="#" class="text-white">Mi Plataforma Personal</a>
+                </div>
+                <div class="col-12 col-sm-6 text-sm-end">
+                    <p>© 2025 - Diseñado por Ti</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Calendario
+            var calendarEl = document.getElementById('calendario');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                events: JSON.parse(localStorage.getItem('eventos')) || [],
+                editable: true,
+                eventClick: function(info) {
+                    if (confirm('¿Eliminar este evento?')) {
+                        info.event.remove();
+                        guardarEventos(calendar.getEvents());
+                    }
+                },
+                dateClick: function(info) {
+                    var title = prompt('Nombre del evento:');
+                    if (title) {
+                        calendar.addEvent({ title: title, start: info.dateStr });
+                        guardarEventos(calendar.getEvents());
+                    }
+                }
+            });
+            calendar.render();
+
+            // Cargar datos
+            document.getElementById('notas').value = localStorage.getItem('notas') || '';
+            document.getElementById('mensajes').value = localStorage.getItem('mensajes') || '';
+
+            // Dibujo
+            inicializarDibujo();
+        });
+
+        function guardarEventos(eventos) {
+            localStorage.setItem('eventos', JSON.stringify(eventos.map(e => ({ title: e.title, start: e.start }))));
+        }
+
+        function guardarNotas() {
+            localStorage.setItem('notas', document.getElementById('notas').value);
+            alert('Notas guardadas');
+        }
+
+        function guardarMensajes() {
+            localStorage.setItem('mensajes', document.getElementById('mensajes').value);
+            alert('Mensajes guardados');
+        }
+
+        function inicializarDibujo() {
+            const canvas = document.getElementById('dibujoCanvas');
+            const ctx = canvas.getContext('2d');
+            let painting = false;
+
+            // Ajustar tamaño del canvas
+            function resizeCanvas() {
+                const container = canvas.parentElement;
+                const maxWidth = container.clientWidth - 40;
+                const aspectRatio = 800/500;
+                
+                if (maxWidth < 800) {
+                    canvas.width = maxWidth;
+                    canvas.height = maxWidth / aspectRatio;
+                } else {
+                    canvas.width = 800;
+                    canvas.height = 500;
+                }
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            // Eventos de dibujo
+            canvas.addEventListener('mousedown', startPosition);
+            canvas.addEventListener('mouseup', finishedPosition);
+            canvas.addEventListener('mousemove', draw);
+
+            function startPosition(e) {
+                painting = true;
+                draw(e);
+            }
+
+            function finishedPosition() {
+                painting = false;
+                ctx.beginPath();
+            }
+
+            function draw(e) {
+                if (!painting) return;
+                ctx.lineWidth = 3;
+                ctx.lineCap = 'round';
+                ctx.strokeStyle = '#000000';
+
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                ctx.lineTo(x, y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+        }
+
+        function limpiarDibujo() {
+            const canvas = document.getElementById('dibujoCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    </script>
+</body>
+</html>
