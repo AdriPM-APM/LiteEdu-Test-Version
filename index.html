@@ -39,14 +39,29 @@
         .footer { background-color: #333; color: #fff; padding: 20px; text-align: center; }
         #calendario { 
             padding: 20px; 
-            min-height: 600px; 
+            min-height: 650px; 
             width: 100%; 
-            max-width: 1000px; 
+            max-width: 1200px; 
             margin: 0 auto; 
+            background-color: #fff; 
+            border-radius: 5px;
         }
-        .fc { font-size: 1.1em; } /* Increase font size for calendar */
-        .fc .fc-daygrid-day-number { font-size: 1.2em; } /* Larger day numbers */
-        .fc .fc-event { font-size: 1em; } /* Larger event text */
+        .fc { 
+            font-size: 1.2em; 
+            width: 100%; 
+            height: 100%; 
+        }
+        .fc .fc-daygrid-day-number { 
+            font-size: 1.3em; 
+            padding: 8px; 
+        }
+        .fc .fc-event { 
+            font-size: 1.1em; 
+            padding: 2px 5px; 
+        }
+        .fc .fc-toolbar { 
+            margin-bottom: 20px; 
+        }
         .form-control { border-radius: 5px; }
         .btn-primary { background-color: #007bff; border: none; }
         .btn-primary:hover { background-color: #0056b3; }
@@ -81,9 +96,12 @@
         }
         @media (max-width: 992px) {
             #calendario {
-                min-height: 400px;
+                min-height: 500px;
                 max-width: 100%;
+                padding: 10px;
             }
+            .fc .fc-daygrid-day-number { font-size: 1.1em; }
+            .fc .fc-event { font-size: 0.9em; }
             #dibujoCanvas {
                 max-width: 95%;
                 height: auto !important;
@@ -242,26 +260,63 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Calendario
             var calendarEl = document.getElementById('calendario');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: JSON.parse(localStorage.getItem('eventos')) || [],
-                editable: true,
-                height: 'auto', // Let calendar adjust height based on content
-                eventClick: function(info) {
-                    if (confirm('¿Eliminar este evento?')) {
-                        info.event.remove();
-                        guardarEventos(calendar.getEvents());
-                    }
-                },
-                dateClick: function(info) {
-                    var title = prompt('Nombre del evento:');
-                    if (title) {
-                        calendar.addEvent({ title: title, start: info.dateStr });
-                        guardarEventos(calendar.getEvents());
-                    }
+            if (!calendarEl) {
+                console.error('Elemento #calendario no encontrado');
+                return;
+            }
+
+            // Validar y sanitizar eventos almacenados
+            let events = [];
+            try {
+                const storedEvents = localStorage.getItem('eventos');
+                if (storedEvents) {
+                    events = JSON.parse(storedEvents);
+                    // Asegurarse de que cada evento tenga las propiedades necesarias
+                    events = events.filter(event => 
+                        event && 
+                        typeof event.title === 'string' && 
+                        event.title.trim() !== '' && 
+                        event.start && 
+                        typeof event.start === 'string'
+                    );
                 }
-            });
-            calendar.render();
+            } catch (error) {
+                console.error('Error al parsear eventos de localStorage:', error);
+                events = [];
+                localStorage.removeItem('eventos'); // Limpiar datos corruptos
+            }
+
+            try {
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    events: events,
+                    editable: true,
+                    height: 'auto',
+                    contentHeight: 600,
+                    aspectRatio: 1.8,
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    eventClick: function(info) {
+                        if (confirm('¿Eliminar este evento?')) {
+                            info.event.remove();
+                            guardarEventos(calendar.getEvents());
+                        }
+                    },
+                    dateClick: function(info) {
+                        var title = prompt('Nombre del evento:');
+                        if (title && title.trim()) {
+                            calendar.addEvent({ title: title, start: info.dateStr });
+                            guardarEventos(calendar.getEvents());
+                        }
+                    }
+                });
+                calendar.render();
+            } catch (error) {
+                console.error('Error al inicializar FullCalendar:', error);
+            }
 
             // Cargar notas y mensajes guardados
             cargarNotas();
@@ -272,7 +327,15 @@
         });
 
         function guardarEventos(eventos) {
-            localStorage.setItem('eventos', JSON.stringify(eventos.map(e => ({ title: e.title, start: e.start }))));
+            try {
+                const sanitizedEvents = eventos.map(e => ({
+                    title: e.title || '',
+                    start: e.start ? e.start.toISOString() : ''
+                })).filter(e => e.title && e.start);
+                localStorage.setItem('eventos', JSON.stringify(sanitizedEvents));
+            } catch (error) {
+                console.error('Error al guardar eventos:', error);
+            }
         }
 
         function guardarNotas() {
@@ -287,7 +350,7 @@
             localStorage.setItem('savedNotas', JSON.stringify(notas));
             document.getElementById('notas').value = '';
             cargarNotas();
-            alert('Nota guard carpeta');
+            alert('Nota guardada');
         }
 
         function cargarNotas() {
