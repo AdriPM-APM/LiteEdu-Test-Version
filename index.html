@@ -11,9 +11,26 @@
         body { font-family: 'Rubik', Arial, sans-serif; background-color: #f8f9fa; }
         .navbar { background-color: #333; }
         .navbar-brand, .nav-link { color: #fff !important; }
-        .sidebar { background-color: #fff; border-right: 1px solid #dee2e6; padding-top: 20px; }
-        .sidebar .nav-link { color: #333; }
-        .sidebar .nav-link.active { background-color: #007bff; color: #fff; }
+        .sidebar { 
+            background-color: #0a0a23; /* Navy blue background */
+            border-right: 1px solid #dee2e6; 
+            padding-top: 20px; 
+        }
+        .sidebar .nav-link { 
+            color: #fff; /* White text for visibility */
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
+            border-radius: 5px; 
+            margin: 5px 10px; 
+            padding: 10px;
+        }
+        .sidebar .nav-link:hover { 
+            background-color: #1c1c4d; /* Slightly lighter navy on hover */
+            transform: scale(1.05); /* Slight scale-up on hover */
+        }
+        .sidebar .nav-link.active { 
+            background-color: #007bff; 
+            color: #fff; 
+        }
         .block-home { margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); background-color: #fff; }
         .titol { padding: 15px; color: #fff; font-size: 1.2rem; border-radius: 8px 8px 0 0; }
         .links { padding: 15px; }
@@ -144,7 +161,8 @@
                     </div>
 
                     <!-- Pestaña Dibujo -->
-                    <div class="tab-pane fade" id="dibujo">
+                    <div class="tab-pane fade" id="dibu
+jo">
                         <div class="block-home">
                             <div class="titol" style="background-color: #ffc107;">
                                 <i class="fas fa-paint-brush fa-lg"></i> Zona de Dibujo
