@@ -12,20 +12,20 @@
         .navbar { background-color: #333; }
         .navbar-brand, .nav-link { color: #fff !important; }
         .sidebar { 
-            background-color: #0a0a23; /* Navy blue background */
+            background-color: #0a0a23;
             border-right: 1px solid #dee2e6; 
             padding-top: 20px; 
         }
         .sidebar .nav-link { 
-            color: #fff; /* White text for visibility */
-            transition: all 0.3s ease; /* Smooth transition for hover effects */
+            color: #fff;
+            transition: all 0.3s ease;
             border-radius: 5px; 
             margin: 5px 10px; 
             padding: 10px;
         }
         .sidebar .nav-link:hover { 
-            background-color: #1c1c4d; /* Slightly lighter navy on hover */
-            transform: scale(1.05); /* Slight scale-up on hover */
+            background-color: #1c1c4d;
+            transform: scale(1.05);
         }
         .sidebar .nav-link.active { 
             background-color: #007bff; 
@@ -37,13 +37,20 @@
         .links a { display: block; padding: 10px 0; text-decoration: none; }
         .links a:hover { background-color: #f1f1f1; }
         .footer { background-color: #333; color: #fff; padding: 20px; text-align: center; }
-        #calendario { padding: 15px; }
+        #calendario { 
+            padding: 20px; 
+            min-height: 600px; 
+            width: 100%; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+        }
+        .fc { font-size: 1.1em; } /* Increase font size for calendar */
+        .fc .fc-daygrid-day-number { font-size: 1.2em; } /* Larger day numbers */
+        .fc .fc-event { font-size: 1em; } /* Larger event text */
         .form-control { border-radius: 5px; }
         .btn-primary { background-color: #007bff; border: none; }
         .btn-primary:hover { background-color: #0056b3; }
         .tab-pane { padding: 20px; }
-        
-        /* Estilos para el área de dibujo */
         .canvas-container {
             display: flex;
             justify-content: center;
@@ -57,7 +64,26 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             margin: auto;
         }
+        .saved-entries {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 10px;
+        }
+        .saved-entry {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+        .saved-entry:last-child {
+            border-bottom: none;
+        }
         @media (max-width: 992px) {
+            #calendario {
+                min-height: 400px;
+                max-width: 100%;
+            }
             #dibujoCanvas {
                 max-width: 95%;
                 height: auto !important;
@@ -125,44 +151,61 @@
                         <h1 class="titol-home"><i class="fas fa-home"></i> Inicio</h1>
                         <h2 class="subtitol-home">Bienvenidos a tu plataforma personal</h2>
                         <div class="row">
-                            <div class="col-md-6 col-xl-4">
+                            <div class="col-12">
                                 <div class="block-home">
                                     <div class="titol" style="background-color: #007bff;">
-                                        <i class="fas fa-calendar-alt fa-lg"></i> Calendario
+                                        <i class="fas fa-info-circle fa-lg"></i> Bienvenida
                                     </div>
                                     <div class="links">
-                                        <div id="calendario"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xl-4">
-                                <div class="block-home">
-                                    <div class="titol" style="background-color: #28a745;">
-                                        <i class="fas fa-sticky-note fa-lg"></i> Notas
-                                    </div>
-                                    <div class="links">
-                                        <textarea id="notas" class="form-control" rows="5" placeholder="Escribe tus notas aquí..."></textarea>
-                                        <button class="btn btn-primary mt-2" onclick="guardarNotas()">Guardar Notas</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-xl-4">
-                                <div class="block-home">
-                                    <div class="titol" style="background-color: #dc3545;">
-                                        <i class="fas fa-comment fa-lg"></i> Mensajes
-                                    </div>
-                                    <div class="links">
-                                        <textarea id="mensajes" class="form-control" rows="5" placeholder="Escribe tus mensajes aquí..."></textarea>
-                                        <button class="btn btn-primary mt-2" onclick="guardarMensajes()">Guardar Mensajes</button>
+                                        <p>Explora las pestañas de Calendario, Notas, Mensajes y Dibujo para organizar tu día y expresar tu creatividad.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Pestaña Calendario -->
+                    <div class="tab-pane fade" id="calendario">
+                        <div class="block-home">
+                            <div class="titol" style="background-color: #007bff;">
+                                <i class="fas fa-calendar-alt fa-lg"></i> Calendario
+                            </div>
+                            <div class="links">
+                                <div id="calendario"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pestaña Notas -->
+                    <div class="tab-pane fade" id="notas">
+                        <div class="block-home">
+                            <div class="titol" style="background-color: #28a745;">
+                                <i class="fas fa-sticky-note fa-lg"></i> Notas
+                            </div>
+                            <div class="links">
+                                <textarea id="notas" class="form-control" rows="5" placeholder="Escribe tus notas aquí..."></textarea>
+                                <button class="btn btn-primary mt-2" onclick="guardarNotas()">Guardar Nota</button>
+                                <div class="saved-entries" id="savedNotas"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pestaña Mensajes -->
+                    <div class="tab-pane fade" id="mensajes">
+                        <div class="block-home">
+                            <div class="titol" style="background-color: #dc3545;">
+                                <i class="fas fa-comment fa-lg"></i> Mensajes
+                            </div>
+                            <div class="links">
+                                <textarea id="mensajes" class="form-control" rows="5" placeholder="Escribe tus mensajes aquí..."></textarea>
+                                <button class="btn btn-primary mt-2" onclick="guardarMensajes()">Guardar Mensaje</button>
+                                <div class="saved-entries" id="savedMensajes"></div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Pestaña Dibujo -->
-                    <div class="tab-pane fade" id="dibu
-jo">
+                    <div class="tab-pane fade" id="dibujo">
                         <div class="block-home">
                             <div class="titol" style="background-color: #ffc107;">
                                 <i class="fas fa-paint-brush fa-lg"></i> Zona de Dibujo
@@ -203,6 +246,7 @@ jo">
                 initialView: 'dayGridMonth',
                 events: JSON.parse(localStorage.getItem('eventos')) || [],
                 editable: true,
+                height: 'auto', // Let calendar adjust height based on content
                 eventClick: function(info) {
                     if (confirm('¿Eliminar este evento?')) {
                         info.event.remove();
@@ -219,9 +263,9 @@ jo">
             });
             calendar.render();
 
-            // Cargar datos
-            document.getElementById('notas').value = localStorage.getItem('notas') || '';
-            document.getElementById('mensajes').value = localStorage.getItem('mensajes') || '';
+            // Cargar notas y mensajes guardados
+            cargarNotas();
+            cargarMensajes();
 
             // Dibujo
             inicializarDibujo();
@@ -232,13 +276,55 @@ jo">
         }
 
         function guardarNotas() {
-            localStorage.setItem('notas', document.getElementById('notas').value);
-            alert('Notas guardadas');
+            const notasText = document.getElementById('notas').value;
+            if (notasText.trim() === '') {
+                alert('Por favor, escribe una nota antes de guardar.');
+                return;
+            }
+            const timestamp = new Date().toLocaleString();
+            const notas = JSON.parse(localStorage.getItem('savedNotas')) || [];
+            notas.unshift({ text: notasText, timestamp: timestamp });
+            localStorage.setItem('savedNotas', JSON.stringify(notas));
+            document.getElementById('notas').value = '';
+            cargarNotas();
+            alert('Nota guard carpeta');
+        }
+
+        function cargarNotas() {
+            const savedNotasDiv = document.getElementById('savedNotas');
+            const notas = JSON.parse(localStorage.getItem('savedNotas')) || [];
+            savedNotasDiv.innerHTML = notas.length ? notas.map(nota => `
+                <div class="saved-entry">
+                    <small>${nota.timestamp}</small>
+                    <p>${nota.text}</p>
+                </div>
+            `).join('') : '<p>No hay notas guardadas.</p>';
         }
 
         function guardarMensajes() {
-            localStorage.setItem('mensajes', document.getElementById('mensajes').value);
-            alert('Mensajes guardados');
+            const mensajesText = document.getElementById('mensajes').value;
+            if (mensajesText.trim() === '') {
+                alert('Por favor, escribe un mensaje antes de guardar.');
+                return;
+            }
+            const timestamp = new Date().toLocaleString();
+            const mensajes = JSON.parse(localStorage.getItem('savedMensajes')) || [];
+            mensajes.unshift({ text: mensajesText, timestamp: timestamp });
+            localStorage.setItem('savedMensajes', JSON.stringify(mensajes));
+            document.getElementById('mensajes').value = '';
+            cargarMensajes();
+            alert('Mensaje guardado');
+        }
+
+        function cargarMensajes() {
+            const savedMensajesDiv = document.getElementById('savedMensajes');
+            const mensajes = JSON.parse(localStorage.getItem('savedMensajes')) || [];
+            savedMensajesDiv.innerHTML = mensajes.length ? mensajes.map(mensaje => `
+                <div class="saved-entry">
+                    <small>${mensaje.timestamp}</small>
+                    <p>${mensaje.text}</p>
+                </div>
+            `).join('') : '<p>No hay mensajes guardados.</p>';
         }
 
         function inicializarDibujo() {
@@ -246,7 +332,6 @@ jo">
             const ctx = canvas.getContext('2d');
             let painting = false;
 
-            // Ajustar tamaño del canvas
             function resizeCanvas() {
                 const container = canvas.parentElement;
                 const maxWidth = container.clientWidth - 40;
@@ -264,7 +349,6 @@ jo">
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas);
 
-            // Eventos de dibujo
             canvas.addEventListener('mousedown', startPosition);
             canvas.addEventListener('mouseup', finishedPosition);
             canvas.addEventListener('mousemove', draw);
