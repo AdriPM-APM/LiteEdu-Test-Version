@@ -38,7 +38,6 @@
             transform: scale(1.05);
         }
         .sidebar .nav-link.active {
-            background-color: #007bff;
             color: #fff;
         }
         .block-home {
@@ -167,6 +166,30 @@
                 height: auto !important;
             }
         }
+
+        /* Estilos específicos para los colores de las pestañas y el texto */
+        .nav-link[href="#inicio"] { background-color: #007bff; }
+        .nav-link[href="#calendario"] { background-color: #007bff; }
+        .nav-link[href="#notas"] { background-color: #28a745; }
+        .nav-link[href="#mensajes"] { background-color: #dc3545; }
+        .nav-link[href="#dibujo"] { background-color: #ffc107; }
+
+        .nav-link[href="#inicio"].active,
+        .nav-link[href="#calendario"].active,
+        .nav-link[href="#notas"].active,
+        .nav-link[href="#mensajes"].active,
+        .nav-link[href="#dibujo"].active {
+            color: #fff;
+        }
+
+        .nav-link[href="#inicio"],
+        .nav-link[href="#calendario"],
+        .nav-link[href="#notas"],
+        .nav-link[href="#mensajes"],
+        .nav-link[href="#dibujo"] {
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
@@ -194,27 +217,27 @@
                 <div class="sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#inicio" data-bs-toggle="tab">
+                            <a class="nav-link active" href="#inicio" data-bs-toggle="tab" style="background-color: #007bff;">
                                 <i class="fas fa-home"></i> Inicio
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#calendario" data-bs-toggle="tab">
+                            <a class="nav-link" href="#calendario" data-bs-toggle="tab" style="background-color: #007bff;">
                                 <i class="fas fa-calendar-alt"></i> Calendario
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#notas" data-bs-toggle="tab">
+                            <a class="nav-link" href="#notas" data-bs-toggle="tab" style="background-color: #28a745;">
                                 <i class="fas fa-sticky-note"></i> Notas
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#mensajes" data-bs-toggle="tab">
+                            <a class="nav-link" href="#mensajes" data-bs-toggle="tab" style="background-color: #dc3545;">
                                 <i class="fas fa-comment"></i> Mensajes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#dibujo" data-bs-toggle="tab">
+                            <a class="nav-link" href="#dibujo" data-bs-toggle="tab" style="background-color: #ffc107;">
                                 <i class="fas fa-paint-brush"></i> Dibujo
                             </a>
                         </li>
@@ -284,7 +307,7 @@
                                 <i class="fas fa-paint-brush fa-lg"></i> Zona de Dibujo
                             </div>
                             <div class="canvas-container">
-                                <canvas id="dibujoCanvas" width="800" height="500"></canvas>
+                                <canvas id="dibujoCanvas" width="1000" height="600"></canvas>
                             </div>
                             <div class="text-center mb-3">
                                 <button class="btn btn-primary mt-2" onclick="limpiarDibujo()">Limpiar Dibujo</button>
@@ -472,14 +495,14 @@
             function resizeCanvas() {
                 const container = canvas.parentElement;
                 const maxWidth = container.clientWidth - 40;
-                const aspectRatio = 800/500;
+                const aspectRatio = 1000/600;
 
-                if (maxWidth < 800) {
+                if (maxWidth < 1000) {
                     canvas.width = maxWidth;
                     canvas.height = maxWidth / aspectRatio;
                 } else {
-                    canvas.width = 800;
-                    canvas.height = 500;
+                    canvas.width = 1000;
+                    canvas.height = 600;
                 }
             }
 
