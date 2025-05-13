@@ -14,10 +14,10 @@
         body {
             font-family: 'Rubik', Arial, sans-serif;
             background-color: #f8f9fa;
-            margin: 0; /* Resetear el margen del body para evitar espacios no deseados */
-            display: flex; /* Añadir para el layout de la página completa */
-            flex-direction: column; /* Asegurar que el contenido se apile verticalmente */
-            min-height: 100vh; /* Establecer la altura mínima del body al 100% del viewport */
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .navbar {
             background-color: #333;
@@ -94,28 +94,27 @@
         .fc .fc-event {
             font-size: 1.1em;
             padding: 2px 5px;
-            border-radius: 5px; /* Añadido para eventos redondeados */
+            border-radius: 5px;
         }
         .fc .fc-toolbar {
             margin-bottom: 20px;
         }
         .fc .fc-button {
-            border-radius: 5px; /* Añadido para botones redondeados */
-            box-shadow: none; /* Elimina la sombra por defecto de los botones */
-            transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+            border-radius: 5px;
+            box-shadow: none;
+            transition: background-color 0.3s ease;
         }
         .fc .fc-button:hover {
-            background-color: #0056b3 !important; /* Cambia el color al pasar el ratón */
+            background-color: #0056b3 !important;
         }
         .fc .fc-button:active {
-            background-color: #004080 !important; /* Color más oscuro al hacer clic */
+            background-color: #004080 !important;
         }
         .fc-view-harness {
-            border-radius: 8px; /* Añade border-radius al contenedor del calendario */
-            overflow: hidden;  /* Asegura que los bordes de los eventos y la cuadrícula se ajusten al radio */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Añade una ligera sombra */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-
         .form-control {
             border-radius: 5px;
         }
@@ -144,7 +143,7 @@
             margin: auto;
             max-width: 100%;
             height: auto;
-            border-radius: 8px; /* Añadido radio de borde al canvas */
+            border-radius: 8px;
         }
         .saved-entries {
             margin-top: 20px;
@@ -158,7 +157,7 @@
             border-bottom: 1px solid #eee;
             padding: 10px 0;
             position: relative;
-            border-radius: 5px; /* Añadido radio de borde a la entrada guardada */
+            border-radius: 5px;
         }
         .saved-entry:last-child {
             border-bottom: none;
@@ -215,37 +214,29 @@
             color: #fff;
         }
         main {
-            flex: 1; /* Esto hace que el main ocupe el espacio restante */
+            flex: 1;
         }
         #inicio {
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
-            align-items: stretch;
-            min-height: calc(100vh - 56px); /* Ajusta 56px por la altura del navbar si es necesario */
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 56px);
+            text-align: center;
         }
 
         #inicio .titol-home {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 0;
+            margin-bottom: 1rem;
         }
 
         #inicio .subtitol-home {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 0;
+            margin-bottom: 2rem;
         }
 
         #inicio .block-home {
-            flex: 3;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            margin-bottom: 2rem;
+            width: 80%;
+            max-width: 600px;
         }
     </style>
 </head>
@@ -293,7 +284,21 @@
             <main class="col-12 col-sm-8 col-lg-10 pt-4">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="inicio">
-                        <h1 class="titol-home"> Inicio</h1>
+                        <h1 class="titol-home">
+                            <script>
+                                var today = new Date();
+                                var hour = today.getHours();
+                                var greeting = "Hola";
+                                if (hour < 12) {
+                                    greeting = "Buenos días";
+                                } else if (hour < 18) {
+                                    greeting = "Buenas tardes";
+                                } else {
+                                    greeting = "Buenas noches";
+                                }
+                                document.write(greeting);
+                            </script>
+                        </h1>
                         <h2 class="subtitol-home">Bienvenidos a tu plataforma personal</h2>
                         <div class="row">
                             <div class="col-12">
@@ -301,8 +306,8 @@
                                     <div class="titol" style="background-color: #007bff;">
                                          Bienvenida
                                     </div>
-                                    <div class="links">
-                                        <p>Explora las pestañas de Calendario, Notas, Mensajes y Dibujo para organizar tu día y expresar tu creatividad.</p>
+                                    <div class="links" style="text-align: center;">
+                                        <p style="display: inline-block; text-align: justify; width: 100%;">Explora las pestañas de Calendario, Notas, Mensajes y Dibujo para organizar tu día y expresar tu creatividad.</p>
                                     </div>
                                 </div>
                             </div>
@@ -593,3 +598,4 @@
     </script>
 </body>
 </html>
+
