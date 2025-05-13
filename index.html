@@ -132,9 +132,21 @@
         .saved-entry {
             border-bottom: 1px solid #eee;
             padding: 10px 0;
+            position: relative; /* Añadido para posicionar el botón de eliminar */
         }
         .saved-entry:last-child {
             border-bottom: none;
+        }
+        .delete-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .delete-btn:hover {
+            opacity: 1;
         }
         @media (max-width: 992px) {
             #calendario {
@@ -399,13 +411,22 @@
         function cargarNotas() {
             const savedNotasDiv = document.getElementById('savedNotas');
             const notas = JSON.parse(localStorage.getItem('savedNotas')) || [];
-            savedNotasDiv.innerHTML = notas.length ? notas.map(nota => `
-                <div class="saved-entry">
+            savedNotasDiv.innerHTML = notas.length ? notas.map((nota, index) => `
+                <div class="saved-entry" data-index="${index}">
                     <small>${nota.timestamp}</small>
                     <p>${nota.text}</p>
+                    <span class="delete-btn" onclick="eliminarNota(${index})"><i class="fas fa-trash-alt"></i></span>
                 </div>
             `).join('') : '<p>No hay notas guardadas.</p>';
         }
+
+        function eliminarNota(index) {
+            let notas = JSON.parse(localStorage.getItem('savedNotas')) || [];
+            notas.splice(index, 1);
+            localStorage.setItem('savedNotas', JSON.stringify(notas));
+            cargarNotas();
+        }
+
 
         function guardarMensajes() {
             const mensajesText = document.getElementById('mensajesInput').value;
@@ -425,12 +446,20 @@
         function cargarMensajes() {
             const savedMensajesDiv = document.getElementById('savedMensajes');
             const mensajes = JSON.parse(localStorage.getItem('savedMensajes')) || [];
-            savedMensajesDiv.innerHTML = mensajes.length ? mensajes.map(mensaje => `
-                <div class="saved-entry">
+            savedMensajesDiv.innerHTML = mensajes.length ? mensajes.map((mensaje, index) => `
+                <div class="saved-entry" data-index="${index}">
                     <small>${mensaje.timestamp}</small>
                     <p>${mensaje.text}</p>
+                    <span class="delete-btn" onclick="eliminarMensaje(${index})"><i class="fas fa-trash-alt"></i></span>
                 </div>
             `).join('') : '<p>No hay mensajes guardados.</p>';
+        }
+
+        function eliminarMensaje(index) {
+            let mensajes = JSON.parse(localStorage.getItem('savedMensajes')) || [];
+            mensajes.splice(index, 1);
+            localStorage.setItem('savedMensajes', JSON.stringify(mensajes));
+            cargarMensajes();
         }
 
         function inicializarDibujo() {
