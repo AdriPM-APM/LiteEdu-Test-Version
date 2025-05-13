@@ -90,16 +90,35 @@
         .fc .fc-event {
             font-size: 1.1em;
             padding: 2px 5px;
+            border-radius: 5px; /* Añadido para eventos redondeados */
         }
         .fc .fc-toolbar {
             margin-bottom: 20px;
         }
+        .fc .fc-button {
+            border-radius: 5px; /* Añadido para botones redondeados */
+            box-shadow: none; /* Elimina la sombra por defecto de los botones */
+            transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+        }
+        .fc .fc-button:hover {
+            background-color: #0056b3 !important; /* Cambia el color al pasar el ratón */
+        }
+        .fc .fc-button:active {
+            background-color: #004080 !important; /* Color más oscuro al hacer clic */
+        }
+        .fc-view-harness {
+            border-radius: 8px; /* Añade border-radius al contenedor del calendario */
+            overflow: hidden;  /* Asegura que los bordes de los eventos y la cuadrícula se ajusten al radio */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Añade una ligera sombra */
+        }
+
         .form-control {
             border-radius: 5px;
         }
         .btn-primary {
             background-color: #007bff;
             border: none;
+            border-radius: 5px;
         }
         .btn-primary:hover {
             background-color: #0056b3;
@@ -121,6 +140,7 @@
             margin: auto;
             max-width: 100%;
             height: auto;
+            border-radius: 8px; /* Añadido radio de borde al canvas */
         }
         .saved-entries {
             margin-top: 20px;
@@ -134,6 +154,7 @@
             border-bottom: 1px solid #eee;
             padding: 10px 0;
             position: relative;
+            border-radius: 5px; /* Añadido radio de borde a la entrada guardada */
         }
         .saved-entry:last-child {
             border-bottom: none;
@@ -196,18 +217,6 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Mi Plataforma Personal</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link active" href="#inicio" data-bs-toggle="tab">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#calendario" data-bs-toggle="tab">Calendario</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#notas" data-bs-toggle="tab">Notas</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#mensajes" data-bs-toggle="tab">Mensajes</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#dibujo" data-bs-toggle="tab">Dibujo</a></li>
-                </ul>
-            </div>
         </div>
     </nav>
 
@@ -218,27 +227,27 @@
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" href="#inicio" data-bs-toggle="tab" style="background-color: #007bff;">
-                                <i class="fas fa-home"></i> Inicio
+                                 Inicio
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#calendario" data-bs-toggle="tab" style="background-color: #007bff;">
-                                <i class="fas fa-calendar-alt"></i> Calendario
+                                 Calendario
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#notas" data-bs-toggle="tab" style="background-color: #28a745;">
-                                <i class="fas fa-sticky-note"></i> Notas
+                                 Notas
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#mensajes" data-bs-toggle="tab" style="background-color: #dc3545;">
-                                <i class="fas fa-comment"></i> Mensajes
+                                 Mensajes
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#dibujo" data-bs-toggle="tab" style="background-color: #ffc107;">
-                                <i class="fas fa-paint-brush"></i> Dibujo
+                                 Dibujo
                             </a>
                         </li>
                     </ul>
@@ -248,13 +257,13 @@
             <main class="col-12 col-sm-8 col-lg-10 pt-4">
                 <div class="tab-content">
                     <div class="tab-pane fade show active" id="inicio">
-                        <h1 class="titol-home"><i class="fas fa-home"></i> Inicio</h1>
+                        <h1 class="titol-home"> Inicio</h1>
                         <h2 class="subtitol-home">Bienvenidos a tu plataforma personal</h2>
                         <div class="row">
                             <div class="col-12">
                                 <div class="block-home">
                                     <div class="titol" style="background-color: #007bff;">
-                                        <i class="fas fa-info-circle fa-lg"></i> Bienvenida
+                                         Bienvenida
                                     </div>
                                     <div class="links">
                                         <p>Explora las pestañas de Calendario, Notas, Mensajes y Dibujo para organizar tu día y expresar tu creatividad.</p>
@@ -267,7 +276,7 @@
                     <div class="tab-pane fade" id="calendario">
                         <div class="block-home">
                             <div class="titol" style="background-color: #007bff;">
-                                <i class="fas fa-calendar-alt fa-lg"></i> Calendario
+                                 Calendario
                             </div>
                             <div class="links">
                                 <div id="calendario"></div>
@@ -278,7 +287,7 @@
                     <div class="tab-pane fade" id="notas">
                         <div class="block-home">
                             <div class="titol" style="background-color: #28a745;">
-                                <i class="fas fa-sticky-note fa-lg"></i> Notas
+                                 Notas
                             </div>
                             <div class="links">
                                 <textarea id="notasInput" class="form-control" rows="5" placeholder="Escribe tus notas aquí..."></textarea>
@@ -291,7 +300,7 @@
                     <div class="tab-pane fade" id="mensajes">
                         <div class="block-home">
                             <div class="titol" style="background-color: #dc3545;">
-                                <i class="fas fa-comment fa-lg"></i> Mensajes
+                                 Mensajes
                             </div>
                             <div class="links">
                                 <textarea id="mensajesInput" class="form-control" rows="5" placeholder="Escribe tus mensajes aquí..."></textarea>
@@ -304,7 +313,7 @@
                     <div class="tab-pane fade" id="dibujo">
                         <div class="block-home">
                             <div class="titol" style="background-color: #ffc107;">
-                                <i class="fas fa-paint-brush fa-lg"></i> Zona de Dibujo
+                                 Zona de Dibujo
                             </div>
                             <div class="canvas-container">
                                 <canvas id="dibujoCanvas" width="1000" height="600"></canvas>
